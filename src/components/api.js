@@ -1,5 +1,4 @@
 import {API_BASE_URL} from '../config';
-import {getAuthInfo} from './util';
 
 // Sign in 
 export const postLogin = usr => {
@@ -156,7 +155,7 @@ export const deleteResume = id => {
       },
       method: 'DELETE'
     })
-    .then(response=>new Promise( (resolve) => setTimeout(()=> resolve(response), 600)))  
+    .then(response=>new Promise( (resolve) => setTimeout(()=> resolve(response), 200)))  
     .then(response => {
       if (response.ok) {
         return;
@@ -164,6 +163,31 @@ export const deleteResume = id => {
       throw new Error(response.statusText);
       
     })
+    .catch(err => {
+      console.error(err);
+      return err;
+    });
+}
+
+// Change the status (Only admin)
+export const putStatus = (id, status) => {
+  const authToken = localStorage.getItem('authToken');
+  return fetch(API_BASE_URL + '/resumes/status/' + id, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${authToken}`
+      },
+      method: 'PUT',
+      body: JSON.stringify({status})
+    })
+    .then(response => {
+      if (response.ok) return response.json();
+      throw new Error(response.statusText);
+    })
+    // .then(data => {
+    //   renderMessage({ title: 'Success', message: `Application status is set to ${status}.`});
+    //   console.log(data);
+    // })
     .catch(err => {
       console.error(err);
       return err;

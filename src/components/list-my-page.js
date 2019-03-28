@@ -18,8 +18,18 @@ export default function ListMyPage(props) {
  
     
     let listJsx = [];
-    useEffect(() => getList(), []);
     useEffect(() => {
+        getList();
+        document.getElementById('content-top').scrollIntoView();
+    }, []);
+
+    
+    useEffect(() => {
+        if (eventContext.redirect === props.match.path) {
+            eventContext.updateRedirect(null);
+            document.getElementById('content-top').scrollIntoView();
+        }
+
         if (eventContext.redirect) props.history.push(eventContext.redirect);
         
     });
@@ -79,7 +89,7 @@ export default function ListMyPage(props) {
     }
 
     return (
-        <main className='main_bg' role='main'>
+        <main className='main_bg fi' id='content-top' role='main'>
             <div className='row'> 
                 <div className='col-12'>
                     <section id='js-list' className='' role='regional' aria-live='polite'>

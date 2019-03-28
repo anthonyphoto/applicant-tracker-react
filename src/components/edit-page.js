@@ -22,7 +22,11 @@ export default function EditPage(props) {
         props.history.push('/');
     }
 
-    useEffect(() => getDetail(), []);
+    useEffect(() => {
+        getDetail();
+        document.getElementById('content-top').scrollIntoView();
+    }, []);
+
     useEffect(() => {
         if (eventContext.redirect) props.history.push(eventContext.redirect);
         if (focus) {
@@ -65,7 +69,6 @@ export default function EditPage(props) {
     const handleSubmit = async e => {
         e.preventDefault();
         const resume = parseResumeForm(e.target, companyQty);
-        console.log("updated resume: ", resume);
         if (resume.title === "Error") {
             eventContext.updateError(resume);
             setFocus(resume.focus);
@@ -75,7 +78,6 @@ export default function EditPage(props) {
         eventContext.updateLoading(true);
         const result = await putResume(resume, id);  
         eventContext.updateLoading(false);
-        console.log("res: ", result);
 
         if (result instanceof Error) {
             eventContext.updateError(result);
@@ -83,7 +85,7 @@ export default function EditPage(props) {
         else {
             setSubmitSuccess({
                 title: "Thank you",
-                message: 'Your resume is succefully updated.',
+                message: 'Your resume is successfully updated.',
                 id: result._id
             });
         }
@@ -92,12 +94,12 @@ export default function EditPage(props) {
     const onSubmitRedirect = (e, eventId) => {
         e.preventDefault();
         setSubmitSuccess(null);
-        console.log("eid", eventId);
+        document.getElementById('content-top').scrollIntoView();
         props.history.push(`/view/${eventId}`);
       }
         
     return (
-        <main className='main_bg_form' role='main'>
+        <main className='main_bg_form' id='content-top' role='main'>
             <div className='row'> 
                 <div className='col-12'>
                     <section id='js-post' role='regional' aria-live='polite'>
@@ -124,7 +126,7 @@ export default function EditPage(props) {
                     <div id='js-btn2'>
                         <button id="js-btn-post" type="submit" className="button inp">Update</button>
                     </div>
-                    <a id='js-post-cancel' href='cancel'>Cancel and go back to List ></a>
+                    <Link to="/mylist" id='js-post-cancel'>Cancel and go back to List ></Link>
                     </form>
                     <p className="line_sp"></p>
                     </section>
@@ -141,6 +143,7 @@ export default function EditPage(props) {
                     }
                 </div>
             </div>
+
         </main>
     );
 }

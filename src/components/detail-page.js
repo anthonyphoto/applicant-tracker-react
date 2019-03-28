@@ -1,6 +1,7 @@
 import React, {useState, useEffect, useContext} from 'react';
 import EventContext from './event-context';
-import {getResume, deleteResume} from './api';
+import {getResume, deleteResume, putStatus} from './api';
+import AdminForm from './admin-form';
 import {getAuthInfo, normalizePhone, customDate, getCompanyDetailJsx, getSkillDetailJsx, getSchoolDetailJsx} from './util';
 
 export default function DetailPage(props) {
@@ -11,7 +12,10 @@ export default function DetailPage(props) {
     const id = props.match.params.id;
     const loggedUser = getAuthInfo() || {};
 
-    useEffect(() => getDetail(), []);
+    useEffect(() => {
+        getDetail();
+        document.getElementById('content-top').scrollIntoView();
+    }, []);
     useEffect(() => {
         if (eventContext.redirect) props.history.push(eventContext.redirect);
     });
@@ -38,26 +42,41 @@ export default function DetailPage(props) {
         e.preventDefault();
         setDeleteReq(false);
 
+        eventContext.updateLoading(true);
         deleteResume(id)
         .then(result => {
             eventContext.updateLoading(false);
             if (result instanceof Error) {
                 eventContext.updateError(result);
-                }
-                else setDeleteSuccess(true);
+            }
+            else setDeleteSuccess(true);
         })
     }
 
     const onSubmitRedirect = e => {
         e.preventDefault();
         setDeleteSuccess(null);
+        document.getElementById('content-top').scrollIntoView();
         props.history.push(`/mylist`);
       }
 
+    const updateStatus = e => {
+        e.preventDefault();
+        putStatus(id, e.target.status.value)
+        .then(result => {
+            if (result instanceof Error) {
+                alert(result.message);
+            }
+            else {
+                alert("Success!");
+                getDetail();    // update the current page
+            };
+        })
+    }
+
     
-    console.log(1, resume);
     return (
-        <main className='main_bg_form' role='main'>
+        <main className='main_bg_form fi' id="content-top" role='main'>
             <div className='row'> 
                 <div className='col-12'>
                     <section id='js-detail' className='ind_l mg_top' role='regional' aria-live='polite'>
@@ -99,7 +118,11 @@ export default function DetailPage(props) {
                     </div>
                         <div className='clr'></div>
                         <div id='js-detail-btn'>
-                        <button onClick={()=>props.history.push('/')} type="submit" id="js-go-list" className="btn_black">Back to List</button>
+                        { Object.keys(loggedUser).length ?
+                            <button onClick={()=>props.history.push('/mylist')} type="submit" id="js-go-list" className="btn_black">Back to MyList</button>
+                          :
+                            <button onClick={()=>props.history.push('/')} type="submit" id="js-go-list" className="btn_black">Back to List</button>
+                        } 
                         {  loggedUser && resume.submitter ? 
                             ((loggedUser.username === resume.submitter.username || loggedUser.admin)) ? 
                             <React.Fragment>
@@ -111,22 +134,19 @@ export default function DetailPage(props) {
                         </div>
                         <div className="line_sp">* Only admin or submitter can modify or delete the posts.</div>
                         <p className="mg_top"></p> 
-                        { loggedUser.admin ? <React.Fragment>
+                        { 
+                            (loggedUser.admin && resume.status) ? 
+                            <React.Fragment>
                             <div className='section-border'></div>
                             <div className='blk line15 inp-full'>
                                 <p className='font_ms red'>Status Update (Admin only)</p>
-                                <form id='js-status-update' method='post'>
-                                    <select id="status" required>
-                                    <option value="Submitted">Submitted</option>
-                                    <option value="Interview Scheduled">Interview Scheduled</option>
-                                    <option value="In Review">In Review</option>
-                                    <option value="Rejected">Rejected</option>
-                                    <option value="Offer">Offer</option>
-                                    </select>&nbsp; &nbsp; 
-                                    <button id="js-btn-status" type="submit" value='${id}'> Update</button>
+                                <form onSubmit={e => updateStatus(e)} id='js-status-update' method='post'>
+                                    <AdminForm status={resume.status} />
+                                    <button id="js-btn-status" type="submit"> Update</button>
                                 </form>
                             </div>
-                        </React.Fragment> : ""
+                          </React.Fragment>
+                            : ""
                         }
 
                     </section>
@@ -134,7 +154,7 @@ export default function DetailPage(props) {
                     { deleteReq ?
                         <div>
                             <div id='js-popup-bg' className='dark'></div>
-                            <section className='popup' id="js-popup" role="region">                  
+                            <section className='popup' id="js-popup">
                                 <div id='js-err-title' className='font_l red'>Confirm</div><br/>
                                 <div id='js-err-message' className='font_m mg0'>Are you sure to delete this item?</div>
                                 <div id='js-btn'>
@@ -148,7 +168,7 @@ export default function DetailPage(props) {
                     { deleteSuccess ?
                         <div>
                         <div id='js-popup-bg' className='dark'></div>
-                        <section className='popup' id="js-popup" role="region">                  
+                        <section className='popup' id="js-popup">                  
                             <div id='js-err-title' className='font_l green'>Success</div><br/>
                             <div id='js-err-message' className='font_m mg0'>Your resume is successfully deleted.</div>
                             <div id='js-btn'><button onClick={e => onSubmitRedirect(e)} id='js-btn-ok' className="button btn-ok">O K</button></div>

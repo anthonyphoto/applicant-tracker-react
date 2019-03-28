@@ -392,3 +392,44 @@ a:focus  {
   margin-top: 4.7rem;
   margin-left: 1.8rem;
 }
+
+.fi {
+  -webkit-animation: fadein 2s; 
+          animation: fadein 2s;
+}
+
+.fi1 {
+  -webkit-animation: fadein 0.5s; 
+          animation: fadein 0.5s;
+}
+
+@keyframes fadein {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Mobile, grid 740 */
+@media only screen and (max-width: 760px) {
+
+  .popup {
+    position: fixed;
+    width: 100%;
+    left: 0%;
+    height: 50%;
+    top: 20%;
+    bottom: 10%;
+  }
+  .font_m {
+    max-width: 100%;
+    margin-top: 0.7rem;
+    margin-bottom: 0.5rem;
+  }
+  .font_l {
+    font-size: 2.5rem;
+    letter-spacing: -0.01rem;
+    line-height: 1.23076923;
+    max-width: 100%;
+    margin-bottom: 1rem;
+  }
+}
+

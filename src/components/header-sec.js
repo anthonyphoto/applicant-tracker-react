@@ -6,7 +6,6 @@ import {getAuthInfo} from './util';
 export default function HeaderSec(props) {
     const [user, setUser] = useState('');
     const [showLogin, setShowLogin] = useState(false);
-    const [showSignup, setSignup] = useState(false);
 
     const eventContext = useContext(EventContext);
 
@@ -29,6 +28,8 @@ export default function HeaderSec(props) {
     const closeLogin = () => {
         setShowLogin(false);
         setUser(getAuthInfo());
+        document.getElementById('content-top').scrollIntoView();
+        eventContext.updateRedirect('/mylist');
     }
 
     const onLogout = (e) => {
@@ -39,7 +40,7 @@ export default function HeaderSec(props) {
 
     return (
         <React.Fragment>  
-            <header className='banner'>
+            <header className='banner fi'>
                 <div className='row'> 
                     <div id='js-main' className='col-12'>
                         <section id='js-top-link' className="top al_left">
@@ -56,6 +57,7 @@ export default function HeaderSec(props) {
                     </div>
                 </div>
             </header>
+            <div id="content-top"></div>
             { showLogin ? 
                 <SignInSec 
                     onLogin={()=>closeLogin()} 

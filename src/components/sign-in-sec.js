@@ -4,10 +4,9 @@ import {postLogin, postSignup} from './api';
 
 export default function SignInSec(props) {
 
-  // const [loginUpdate, setLoginUpdate] = useState(false);
+  const eventContext = useContext(EventContext);
   const [signupDone, setSignupDone] = useState(null);
   const [newUser, setNewUser] = useState(false);  // Signup page for new users
-  const eventContext = useContext(EventContext);
 
   const onSubmit = async e => {
     e.preventDefault();
@@ -76,7 +75,7 @@ export default function SignInSec(props) {
     <React.Fragment>
     { 
         !newUser ? 
-          <section className='login' id="js-login" role="region" aria-live='polite'>                  
+          <section className='login fi1' id="js-login" aria-live='polite'>                  
             <div className="form">
                 <legend className='font_m'>Sign In</legend>
                 <form onSubmit={e => onSubmit(e)} id="signin" method="post">
@@ -96,7 +95,7 @@ export default function SignInSec(props) {
             </div>
           </section>
         :
-        <section className='login' id="js-signup" role="region" aria-live='polite'>                  
+        <section className='login fi1' id="js-signup" aria-live='polite'>                  
           <div className="form">
               <legend className='font_m'>Sign up</legend>
               <form onSubmit={e => onSignup(e)} id="signup" method="post">
@@ -115,7 +114,7 @@ export default function SignInSec(props) {
                   <button type="submit" className="button inp">Sign up</button>
               </form>
               <div>
-                <p onClick={e=>switchPage(e, false)} className="ban_desc al_center">Already have an account? <a id="js-login-link2" href="">Sign In</a></p>
+                <p onClick={e=>switchPage(e, false)} className="ban_desc al_center">Already have an account? <a id="js-login-link2" href="signin">Sign In</a></p>
                 <p className="line_sp"></p>
               </div>
           </div>
@@ -123,8 +122,8 @@ export default function SignInSec(props) {
     }
     { signupDone ?
         <div>
-          <div id='js-popup-bg' className='dark'></div>
-          <section className='popup' id="js-popup" role="region">                  
+          <div id='js-popup-bg fi1' className='dark'></div>
+          <section className='popup' id="js-popup">                  
               <div id='js-err-title' className='font_l green'>{signupDone.title}</div><br/>
               <div id='js-err-message' className='font_m mg0'>{signupDone.message}</div>
               <div id='js-btn'><button onClick={e => onSignupDone(e)} id='js-btn-ok' className="button btn-ok">O K</button></div>

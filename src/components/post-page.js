@@ -16,15 +16,17 @@ export default function PostPage(props) {
     const [focus, setFocus] = useState(null);
     const loggedUser = getAuthInfo();
 
+    useEffect(() => document.getElementById('content-top').scrollIntoView()
+    , [])
+
+
     useEffect(() => {
         if (eventContext.redirect === props.match.path) {
             eventContext.updateRedirect(null);
-            console.log("update called");
         }
         if (focus) {
             document.getElementById(focus).focus();
         }
-
     });
 
 
@@ -49,7 +51,6 @@ export default function PostPage(props) {
     const handleSubmit = async e => {
         e.preventDefault();
         const resume = parseResumeForm(e.target, companyQty);
-        console.log("resumte: ", resume);
         if (resume.title === "Error") {
             eventContext.updateError(resume);
             setFocus(resume.focus);
@@ -68,23 +69,21 @@ export default function PostPage(props) {
                 message: 'Your resume is succefully submitted.',
                 id: result._id
             });
-            console.log("res: ", result);
         }
     }
 
     const onSubmitRedirect = (e, eventId) => {
         e.preventDefault();
         setSubmitSuccess(null);
-        console.log("eid", eventId);
+        document.getElementById('content-top').scrollIntoView();
         props.history.push(`/view/${eventId}`);
       }
     
-
     return (
-        <main className='main_bg_form' role='main'>
+        <main className='main_bg_form fi' id='content-top' role='main'>
             <div className='row'> 
                 <div className='col-12'>
-                    <section id='js-post' role='regional' aria-live='polite'>
+                    <section id='js-post'>
                     <p id='js-name-post' className='font_l ind_l'>{loggedUser ? loggedUser.firstName : ""},</p>
                     <p id='js-msg-post' className='font_m ind_l'>Please submit your resume. We will proceed with your application process.</p>
                     <p className="line_sp"></p>
@@ -108,7 +107,7 @@ export default function PostPage(props) {
                     { submitSuccess ?
                         <div>
                         <div id='js-popup-bg' className='dark'></div>
-                        <section className='popup' id="js-popup" role="region">                  
+                        <section className='popup' id="js-popup">                  
                             <div id='js-err-title' className='font_l green'>{submitSuccess.title}</div><br/>
                             <div id='js-err-message' className='font_m mg0'>{submitSuccess.message}</div>
                             <div id='js-btn'><button onClick={e => onSubmitRedirect(e, submitSuccess.id)} id='js-btn-ok' className="button btn-ok">O K</button></div>

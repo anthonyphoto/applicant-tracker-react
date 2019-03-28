@@ -5,7 +5,6 @@ import React from 'react';
 export default function CompanyForm(props) {
     const id = props.id;
     const exp = props.exp || "";
-    console.log("comp", exp);
 
     return (
         <fieldset id='js-exp-sec' name="experience">

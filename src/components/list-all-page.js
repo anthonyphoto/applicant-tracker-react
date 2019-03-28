@@ -13,9 +13,14 @@ export default function ListAllPage(props) {
     const loggedUser = getAuthInfo() || "";
 
     let listJsx = [];
-    useEffect(() => getList(), []);
+    useEffect(() => {
+        getList();
+        window.scrollTo(0,0);
+
+    }, []);
     useEffect(() => {
         if (eventContext.redirect) props.history.push(eventContext.redirect);
+
     });
 
     // ajax call
@@ -73,7 +78,7 @@ export default function ListAllPage(props) {
     }
 
     return (
-        <main className='main_bg' role='main'>
+        <main className='main_bg fi' role='main'>
             <div className='row'> 
                 <div className='col-12'>
                     <section id='js-list' className='' role='regional' aria-live='polite'>
