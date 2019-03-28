@@ -8,7 +8,6 @@ import {getResume, putResume} from './api';
 import {getAuthInfo, parseResumeForm} from './util';
 import {Link} from 'react-router-dom';
 
-
 export default function EditPage(props) {
     const eventContext = useContext(EventContext);
     const [resume, setResume] = useState({});   // get resume object from db
@@ -65,7 +64,6 @@ export default function EditPage(props) {
         setCompanyQty(companyQty + 1);
     }
 
-
     const handleSubmit = async e => {
         e.preventDefault();
         const resume = parseResumeForm(e.target, companyQty);
@@ -103,7 +101,7 @@ export default function EditPage(props) {
             <div className='row'> 
                 <div className='col-12'>
                     <section id='js-post' role='regional' aria-live='polite'>
-                    <p id='js-name-post' className='font_l ind_l'>{loggedUser.firstName},</p>
+                    <p id='js-name-post' className='font_l ind_l'>{loggedUser ? loggedUser.firstName : ""},</p>
                     <p id='js-msg-post' className='font_m ind_l'>You can update this resume by editing the form below.</p>
                     <p className="line_sp"></p>
                     <form onSubmit={e => handleSubmit(e)} id='ant-1' className="ind_l" method="post">

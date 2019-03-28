@@ -8,7 +8,6 @@ import EditPage from './edit-page';
 import EventContext from './event-context';
 import {Route} from 'react-router-dom';
 
-
 export default class App extends React.Component {
     constructor(props){
         super(props);
@@ -22,7 +21,6 @@ export default class App extends React.Component {
 
     updateUser = (user) => {
         this.setState(Object.assign({}, this.state, { user }));
-        // this.setState({ user })
     }
 
     updateError = (error) => {
@@ -40,11 +38,6 @@ export default class App extends React.Component {
     onConfirm = e => {
         e.preventDefault();
         this.updateError(null);
-    }
-
-    componentDidUpdate() { 
-        // console.log(3, this.state.redirect);
-        // if (this.state.redirect) this.props.history.push(this.state.redirect);
     }
 
     render(){
@@ -67,13 +60,7 @@ export default class App extends React.Component {
             <Route exact path="/view/:id" component={DetailPage} />
             <Route exact path="/edit/:id" component={EditPage} />
             <Route exact path="/post" component={PostPage} />
-            {/* <Route exact path="/intro" component={IntroPage} />
-            <Route exact path="/calendar" component={SchedulePage} />
-            <Route exact path="/book" component={BookPage} />
-            <Route exact path="/myacct" component={MyacctPage} />
-            <Route exact path="/myacct/gallery/:id" component={MygalleryPage} />
-            <Route exact path="/signin" component={LoginPage} />
-            <Route exact path="/signup" component={RegistrationPage} /> */}
+
             {   eventContext.error ? 
                 <div className='fi1'>
                     <div id='js-popup-bg' className='dark'></div>

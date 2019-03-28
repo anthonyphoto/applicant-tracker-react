@@ -3,7 +3,6 @@ import EventContext from './event-context';
 import {postLogin, postSignup} from './api';
 
 export default function SignInSec(props) {
-
   const eventContext = useContext(EventContext);
   const [signupDone, setSignupDone] = useState(null);
   const [newUser, setNewUser] = useState(false);  // Signup page for new users

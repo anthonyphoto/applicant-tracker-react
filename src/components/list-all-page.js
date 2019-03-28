@@ -5,19 +5,18 @@ import EventContext from './event-context';
 import {getAuthInfo, customDate} from './util';
 import {getResumes} from './api';
 
-
-
 export default function ListAllPage(props) {
     const [list, setList] = useState([]);
     const eventContext = useContext(EventContext);
     const loggedUser = getAuthInfo() || "";
-
     let listJsx = [];
+
     useEffect(() => {
         getList();
         window.scrollTo(0,0);
 
     }, []);
+
     useEffect(() => {
         if (eventContext.redirect) props.history.push(eventContext.redirect);
 

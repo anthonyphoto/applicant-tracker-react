@@ -14,14 +14,11 @@ export default function HeaderSec(props) {
         eventContext.updateUser(getAuthInfo());
     }, []);
 
-
     const handleLoginSec = e => {
         e.preventDefault();
         if (user){
             console.log("usr", user);
             eventContext.updateRedirect('/post');
-            // props.history.push('/post');
-
         } else setShowLogin(true);
     }
 
@@ -36,6 +33,7 @@ export default function HeaderSec(props) {
         e.preventDefault();
         localStorage.removeItem('authToken');
         setUser(getAuthInfo());
+        eventContext.updateRedirect('/');
     }
 
     return (

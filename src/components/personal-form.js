@@ -2,7 +2,6 @@ import React from 'react';
 
 export default function PersonalForm(props) {
 
-
     return (
       <fieldset name="personalInfo">
         <div className='blk'>
@@ -32,7 +31,6 @@ export default function PersonalForm(props) {
             <input defaultValue={props.location} type="text" name="loc" id="loc" className="inp" placeholder="Philadelphia, PA" required />
         </div>
       </fieldset>
-
     );
 
 }

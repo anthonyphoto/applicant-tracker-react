@@ -5,8 +5,6 @@ import EventContext from './event-context';
 import {getAuthInfo, customDate} from './util';
 import {getResumeByUser} from './api';
 
-
-
 export default function ListMyPage(props) {
     const [list, setList] = useState([]);
     const eventContext = useContext(EventContext);
@@ -14,8 +12,6 @@ export default function ListMyPage(props) {
     if (!loggedUser) {
         props.history.push('/');
     }
-
- 
     
     let listJsx = [];
     useEffect(() => {
@@ -23,7 +19,6 @@ export default function ListMyPage(props) {
         document.getElementById('content-top').scrollIntoView();
     }, []);
 
-    
     useEffect(() => {
         if (eventContext.redirect === props.match.path) {
             eventContext.updateRedirect(null);

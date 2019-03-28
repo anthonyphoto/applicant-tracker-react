@@ -20,7 +20,6 @@ export default function DetailPage(props) {
         if (eventContext.redirect) props.history.push(eventContext.redirect);
     });
 
-
     const getDetail = () => {
         eventContext.updateLoading(true);
         getResume(id)
@@ -41,7 +40,6 @@ export default function DetailPage(props) {
     const handleDeleteConfirm = e => {
         e.preventDefault();
         setDeleteReq(false);
-
         eventContext.updateLoading(true);
         deleteResume(id)
         .then(result => {
@@ -73,7 +71,6 @@ export default function DetailPage(props) {
             };
         })
     }
-
     
     return (
         <main className='main_bg_form fi' id="content-top" role='main'>
@@ -176,7 +173,6 @@ export default function DetailPage(props) {
                         </div>
                         : ""
                     }
-                    
                 </div>
             </div>
         </main>

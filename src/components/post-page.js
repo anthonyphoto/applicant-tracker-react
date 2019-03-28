@@ -8,7 +8,6 @@ import {postResume} from './api';
 import {getAuthInfo, parseResumeForm} from './util';
 import {Link} from 'react-router-dom';
 
-
 export default function PostPage(props) {
     const eventContext = useContext(EventContext);
     const [companyQty, setCompanyQty] = useState(1);
@@ -17,8 +16,7 @@ export default function PostPage(props) {
     const loggedUser = getAuthInfo();
 
     useEffect(() => document.getElementById('content-top').scrollIntoView()
-    , [])
-
+    , []);
 
     useEffect(() => {
         if (eventContext.redirect === props.match.path) {
@@ -29,12 +27,9 @@ export default function PostPage(props) {
         }
     });
 
-
-
     if (!loggedUser) {
         props.history.push('/');
     }
-    
 
     const companyFormJsx = [];
     for (let i = 1; i <= companyQty; i++) {
@@ -46,7 +41,6 @@ export default function PostPage(props) {
         e.preventDefault();
         setCompanyQty(companyQty + 1);
     }
-
 
     const handleSubmit = async e => {
         e.preventDefault();

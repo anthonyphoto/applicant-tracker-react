@@ -1,10 +1,6 @@
 import React from 'react';
 
-
-
 export default function ListAllPage(props) {
-
-
     return (
                 <ul id='js-ul' className='al_center' aria-live='polite'>
                 <li className='li_main'>

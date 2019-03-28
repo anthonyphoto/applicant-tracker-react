@@ -1,7 +1,5 @@
 import React from 'react';
 
-
-
 export default function CompanyForm(props) {
     const id = props.id;
     const exp = props.exp || "";
